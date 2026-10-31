@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#080d19">
+  <meta name="description" content="NEBULA is a cosmic incremental game. Build an energy empire, research technologies, and master the Singularity.">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="assets/icons/nebula.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+  <title>NEBULA — Build an energy empire</title>
+</head>
+<body>
+  <div class="ambient ambient-a"></div><div class="ambient ambient-b"></div>
+  <header class="topbar">
+    <a class="brand" href="index.html" aria-label="NEBULA home"><span class="brand-mark">✦</span><span>NEBULA</span></a>
+    <div class="top-actions">
+      <span class="version-tag">EARLY ACCESS <b>0.1.0</b></span>
+      <button class="icon-button" id="soundToggle" aria-label="Toggle sound" title="Toggle sound">♫</button>
+      <button class="icon-button" id="settingsButton" aria-label="Settings" title="Settings">⚙</button>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section class="hero-strip">
+      <div><div class="eyebrow"><span class="pulse-dot"></span> REACTOR NETWORK ONLINE</div><h1>Build beyond <span>the stars.</span></h1><p>Turn a spark of Flux into an interstellar energy empire.</p></div>
+      <div class="hero-side"><span class="hero-label">CURRENT ERA</span><strong id="eraLabel">I · IGNITION</strong><span class="hero-sub" id="eraSub">Every empire starts somewhere.</span></div>
+    </section>
+
+    <section class="resource-bar">
+      <div class="resource-main"><div class="resource-icon">ϟ</div><div><span class="resource-label">TOTAL FLUX</span><strong id="fluxDisplay">0</strong><small id="rateDisplay">+0 / sec</small></div></div>
+      <div class="resource-stat"><span>PER CLICK</span><strong id="clickDisplay">1</strong></div>
+      <div class="resource-stat"><span>RESEARCH DATA</span><strong id="dataDisplay">0</strong></div>
+      <div class="resource-stat"><span>DARK MATTER</span><strong id="matterDisplay">0</strong></div>
+    </section>
+
+    <nav class="tabs" aria-label="Game sections">
+      <button class="tab active" data-tab="generator"><span>◈</span> Generator</button>
+      <button class="tab" data-tab="upgrades"><span>⬡</span> Upgrades</button>
+      <button class="tab" data-tab="research"><span>⌘</span> Research</button>
+      <button class="tab" data-tab="operations"><span>✧</span> Operations</button>
+      <button class="tab" data-tab="singularity"><span>◎</span> Singularity</button>
+    </nav>
+
+    <section class="tab-panel active" id="panel-generator">
+      <div class="game-grid">
+        <div class="main-column">
+          <article class="panel reactor-panel">
+            <div class="panel-heading"><div><span class="eyebrow">CORE SYSTEM</span><h2>Flux reactor</h2></div><span class="level-chip" id="reactorLevel">LV 1</span></div>
+            <div class="reactor-stage">
+              <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="orbit orbit-three"></div>
+              <button class="reactor-core" id="collectButton" aria-label="Collect Flux"><span class="core-glyph">ϟ</span><span class="core-caption">TAP TO HARVEST</span></button>
+              <div class="stage-spark spark-a"></div><div class="stage-spark spark-b"></div><div class="stage-spark spark-c"></div>
+            </div>
+            <div class="click-feedback" id="clickFeedback" aria-live="polite">Your reactor is waiting.</div>
+            <div class="reactor-footer"><span>MANUAL OUTPUT</span><strong><span id="manualOutput">+1</span> FLUX / CLICK</strong></div>
+          </article>
+          <article class="panel">
+            <div class="panel-heading"><div><span class="eyebrow">PRODUCTION NETWORK</span><h2>Generators</h2></div><div class="buy-controls"><span>BUY</span><button class="buy-mode active" data-buy="1">×1</button><button class="buy-mode" data-buy="10">×10</button><button class="buy-mode" data-buy="max">MAX</button></div></div>
+            <div id="generatorList" class="item-list"></div>
+          </article>
+        </div>
+        <aside class="side-column">
+          <article class="panel mini-panel"><span class="eyebrow">PRODUCTION OVERVIEW</span><div class="overview-number" id="overviewRate">0 <small>FPS</small></div><div class="meter"><span id="productionMeter"></span></div><div class="overview-foot"><span>Lifetime Flux</span><strong id="lifetimeDisplay">0</strong></div></article>
+          <article class="panel mini-panel"><span class="eyebrow">NEXT MILESTONE</span><h3 id="milestoneTitle">First spark</h3><p id="milestoneText">Generate 100 total Flux.</p><div class="meter"><span id="milestoneMeter"></span></div><small id="milestoneProgress">0 / 100</small></article>
+          <article class="panel mini-panel overdrive-mini"><span class="eyebrow">SPECIAL ABILITY</span><h3>Overdrive</h3><p>Push every generator beyond its limits.</p><div class="charge-track"><span id="chargeFill"></span></div><div class="charge-row"><span id="chargeText">0% charged</span><button class="small-button" id="overdriveButton" disabled>ACTIVATE</button></div></article>
+          <article class="panel mini-panel"><span class="eyebrow">FIELD NOTES</span><p class="quote" id="fieldNote">“A small spark can illuminate an entire galaxy.”</p><span class="note-author">— Reactor Log 001</span></article>
+        </aside>
+      </div>
+    </section>
+
+    <section class="tab-panel" id="panel-upgrades">
+      <div class="section-intro"><span class="eyebrow">OPTIMIZATION</span><h2>Upgrade your operation.</h2><p>Spend Flux to improve manual output, automation, and the entire network.</p></div>
+      <div class="upgrade-grid" id="upgradeList"></div>
+    </section>
+
+    <section class="tab-panel" id="panel-research">
+      <div class="section-intro"><span class="eyebrow">KNOWLEDGE IS POWER</span><h2>Research division.</h2><p>Invest Research Data in specialized disciplines. Unlock nodes in sequence, then shape your own strategy.</p><div class="research-balance">AVAILABLE DATA <strong id="researchBalance">0</strong></div></div>
+      <div class="tree-tabs" id="treeTabs">
+        <button class="tree-tab active" data-tree="kinetic">⌁ Kinetic</button><button class="tree-tab" data-tree="automation">▦ Automation</button><button class="tree-tab" data-tree="science">⚗ Science</button><button class="tree-tab" data-tree="cosmic">✧ Cosmic</button>
+      </div>
+      <div id="researchTree" class="research-grid"></div>
+    </section>
+
+    <section class="tab-panel" id="panel-operations">
+      <div class="section-intro"><span class="eyebrow">LIVE SYSTEMS</span><h2>Operations center.</h2><p>Manage temporary boosts, contracts, and unusual cosmic activity.</p></div>
+      <div class="operations-grid">
+        <article class="panel operation-card"><div class="operation-icon">ϟ</div><span class="eyebrow">ACTIVE ABILITY</span><h3>Overdrive</h3><p>Multiply all production for a short burst. Charge it by generating Flux.</p><div class="big-stat" id="overdriveStatus">READY AT 100%</div><button class="primary-button" id="overdriveButtonLarge" disabled>ACTIVATE OVERDRIVE</button></article>
+        <article class="panel operation-card"><div class="operation-icon">◇</div><span class="eyebrow">DAILY CONTRACT</span><h3 id="contractTitle">Power the grid</h3><p id="contractDescription">Generate 1,000 Flux to complete this contract.</p><div class="meter"><span id="contractMeter"></span></div><div class="contract-bottom"><span id="contractProgress">0 / 1,000</span><button class="small-button" id="claimContract" disabled>CLAIM + DATA</button></div></article>
+        <article class="panel operation-card anomaly-card"><div class="operation-icon">✧</div><span class="eyebrow">ANOMALY SCANNER</span><h3 id="anomalyTitle">Quiet space</h3><p id="anomalyDescription">No anomalies detected. The universe is behaving… for now.</p><div class="anomaly-timer" id="anomalyTimer">SCANNING</div></article>
+      </div>
+      <article class="panel stats-panel"><div class="panel-heading"><div><span class="eyebrow">COMMAND RECORD</span><h2>Empire statistics</h2></div></div><div class="stats-grid"><div><span>Lifetime Flux</span><strong id="statLifetime">0</strong></div><div><span>Total clicks</span><strong id="statClicks">0</strong></div><div><span>Generators owned</span><strong id="statGenerators">0</strong></div><div><span>Upgrades purchased</span><strong id="statUpgrades">0</strong></div><div><span>Research unlocked</span><strong id="statResearch">0</strong></div><div><span>Singularities</span><strong id="statPrestiges">0</strong></div></div></article>
+    </section>
+
+    <section class="tab-panel" id="panel-singularity">
+      <div class="section-intro"><span class="eyebrow">BEYOND THE KNOWN</span><h2>Become the singularity.</h2><p>Collapse your current empire into a permanent source of power. Your knowledge and Dark Matter survive.</p></div>
+      <div class="singularity-layout">
+        <article class="panel singularity-visual"><div class="black-hole"><div></div></div><span class="eyebrow">POTENTIAL DARK MATTER</span><strong class="potential" id="potentialMatter">0</strong><p>Based on lifetime Flux generated this run.</p></article>
+        <article class="panel singularity-details"><span class="eyebrow">THE GREAT RESET</span><h3>Start again. Start stronger.</h3><p>A Singularity resets your Flux, generators, standard upgrades, and research. In exchange, you gain Dark Matter for permanent upgrades.</p><div class="reset-list"><span>✓ Permanent Dark Matter retained</span><span>✓ Singularity upgrades retained</span><span>✓ Achievements and lifetime records retained</span><span>↻ Run progress resets</span></div><button class="primary-button danger-button" id="prestigeButton" disabled>FORM SINGULARITY</button><small id="prestigeHint">Generate at least 1,000,000 lifetime Flux to unlock.</small></article>
+      </div>
+      <div class="section-intro compact-intro"><span class="eyebrow">PERMANENT ADVANCEMENTS</span><h2>Dark Matter research.</h2></div>
+      <div class="upgrade-grid" id="matterUpgradeList"></div>
+    </section>
+
+    <footer class="footer"><span>NEBULA <b>0.1.0</b> · AN INCREMENTAL UNIVERSE</span><span><a href="pages/guide.html">Guide</a><a href="pages/changelog.html">Changelog</a><a href="pages/statistics.html">Stats</a></span></footer>
+  </main>
+
+  <div class="toast-region" id="toastRegion" aria-live="polite"></div>
+  <dialog id="settingsDialog" class="settings-dialog"><form method="dialog"><div class="panel-heading"><div><span class="eyebrow">PREFERENCES</span><h2>Settings</h2></div><button class="icon-button" aria-label="Close">×</button></div><label class="setting-row"><span>Reduced motion</span><input type="checkbox" id="reducedMotion"></label><label class="setting-row"><span>Compact layout</span><input type="checkbox" id="compactMode"></label><div class="settings-actions"><button type="button" class="secondary-button" id="exportSave">EXPORT SAVE</button><button type="button" class="secondary-button" id="importSave">IMPORT SAVE</button><button type="button" class="danger-outline" id="resetSave">RESET GAME</button><input type="file" id="saveFile" accept="application/json" hidden></div><p class="dialog-note">Your progress is saved on this device. Export a backup before clearing browser data.</p></form></dialog>
+  <script src="js/game.js"></script>
+</body>
+</html>

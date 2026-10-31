@@ -1,0 +1,17 @@
+{
+  "name": "NEBULA - Build an Energy Empire",
+  "short_name": "NEBULA",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#080d19",
+  "theme_color": "#080d19",
+  "description": "A cosmic incremental idle game.",
+  "icons": [
+    {
+      "src": "assets/icons/nebula.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
